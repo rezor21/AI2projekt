@@ -1,0 +1,14 @@
+﻿@using AI2projektraporty.Views.Manage
+@inject SignInManager<ApplicationUser> SignInManager
+
+<style>
+    #navlinks a {
+        font-size: 1.4em
+    }
+</style>
+
+<ul id="navlinks" class="list-group">
+    <a class="black-text" asp-action="Index"><li class="@ManageNavPages.IndexNavClass(ViewContext) list-group-item waves-effect">Profile</li></a>
+    <a class="black-text" asp-action="ChangePassword"><li class="@ManageNavPages.ChangePasswordNavClass(ViewContext) list-group-item waves-effect">Password</li></a>
+</ul>
+

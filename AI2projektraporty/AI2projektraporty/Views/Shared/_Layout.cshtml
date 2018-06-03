@@ -1,0 +1,136 @@
+﻿@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BRG&M</title>
+    <link rel="icon" href="~/icon.ico" sizes="16x16" type="image/png">
+
+    <environment include="Development">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="~/lib/css/fontawesome.min.css">
+        <script defer src="~/lib/js/all.js"></script>
+        <!-- Bootstrap core CSS -->
+        <link href="~/lib/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Material Design Bootstrap -->
+        <link href="~/lib/css/mdb.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/lib/css/fontawesome.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/css/mdb.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    </environment>
+  
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark blue fixed-top" style="font-size: 1.2em">
+        <a class="navbar-brand font-weight-bold" asp-controller="Home" asp-action="Index" style="font-size: 1.3em">
+            <span class="d-none d-md-block">Business reports generator & manager</span>
+            <span class="d-block d-md-none">BRG&M</span>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Reports" asp-action="Index"><b><i class="fas fa-file-alt"></i> Reports </b></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Transactions" asp-action="Index"><b><i class="fas fa-money-bill-alt"></i> Transactions </b></a>
+                    </li>
+                }
+            </ul>
+            <ul class="navbar-nav">
+                @if (!SignInManager.IsSignedIn(User))
+                {
+                    <button class="btn primary-color-dark" data-toggle="modal" data-target="#myModal"><i class="fas fa-sign-in-alt"></i> Login</button>
+                    <button class="btn warning-color-dark" data-toggle="modal" data-target="#myModal2"><i class="fas fa-user-plus"></i> Register</button>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link mt-2" asp-controller="Manage" asp-action="Index" title="Manage"><b>Hello @UserManager.GetUserName(User)!</b></a>
+                    </li>
+                    <li class="nav-item align-self-center">
+                        <form asp-controller="Account" asp-action="Logout" method="post">
+                            <button title="Logout" type="submit" class="btn primary-color-dark"><i class="fas fa-power-off" aria-hidden="true"></i></button>
+                        </form>
+                    </li>
+                }
+            </ul>
+        </div>
+    </nav>
+    @await Html.PartialAsync("_LoginPartial")
+    @RenderBody()
+    <footer id="footer" class="page-footer align-content-center blue pt-2">
+        <div class="container-fluid pt-2">
+            <div class="row">
+                <div class="col-md-6 pt-2">
+                    <h3 class="title">Business reports generator & manager</h3>
+                    <p>ASP.NET Core MVC web application</p>
+                    <h5 class="title">Technologies</h5>
+                    <ul class="list-inline">
+                        <li><a href="https://docs.microsoft.com/pl-pl/aspnet/core/">ASP.NET Core 2.0</a></li>
+                        <li><a href="https://jquery.com/">jQuery</a></li>
+                        <li><a href="https://getbootstrap.com/">Bootstrap</a> & <a href="http://mdbootstrap.com">MDBootstrap</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6 pt-2">
+                    <h3 class="title">Authors</h3>
+                    <ul>
+                        <li>Michał Rembisz</li>
+                        <li>Jaromir Sarzyński</li>
+                        <li>Daniel Smolak</li>
+                        <li>Krystian Pinderski</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="text-center">
+                © 2018 Copyright: <a asp-controller="Home" asp-action="Index"> Business reports generator & manager</a>
+            </div>
+        </div>
+    </footer>
+
+    <environment include="Development">
+        <script type="text/javascript" src="~/lib/js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="~/lib/js/popper.min.js"></script>
+        <script type="text/javascript" src="~/lib/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="~/lib/js/mdb.min.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/popper.min.js">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous">
+        </script>
+        <script defer src="~/lib/js/all.js" asp-append-version="true"></script>
+        <script src="~/lib/js/mdb.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

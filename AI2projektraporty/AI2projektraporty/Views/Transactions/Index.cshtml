@@ -1,0 +1,154 @@
+﻿
+
+@{
+    ViewData["Title"] = "Transactions";
+}
+
+<style>
+    table th, td {
+        font-size: 1.12em !important;
+    }
+
+    .display-0 {
+        font-size: calc(7px + 6vw);
+    }
+</style>
+
+<div class="bgimgreport d-flex align-items-center justify-content-center">
+
+    <div class="container-fluid">
+        <div class="pt-4">
+            <div class="mt-5 mb-4 text-center">
+                <p class="display-0 text-white shadow-white">Transactions</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="jumbotron text-center">
+                <h1 class="pb-4">Add a new transaction</h1>
+                <form action="javascript:void(0);" method="POST" onsubmit="addTransaction()">
+                    <div class="row mb-4">
+                        <div class="col-md-5 input-group">
+                            <div class="justify-content-center">
+                                <span style="height: 3.8em;" class="input-group-text" id="Ttile">Title</span>
+                            </div>
+                            <input type="text" class="form-control" name="Title" id="add-title" required>
+                        </div>
+                        <div class="col-md-5 input-group">
+                            <div class="justify-content-center">
+                                <span style="height: 3.8em;" class="input-group-text" id="Amount">Amount</span>
+                            </div>
+                            <input class="form-control" style="height: 3.8em;" type="number" id="add-amount" required>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="btn btn-success" type="submit" value="Add"></input>
+                        </div>
+                    </div>
+                </form>
+
+                <hr />
+
+                <h1 id="countert" class="p-4"></h1>
+
+                <table id="transTable" class="table table-bordered table-hover table-striped table-responsive-md">
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                    <tbody scope="row" id="transactions"></tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script>
+        const turi = 'api/transactions';
+        let transactions = null;
+
+        function getCountt(data) {
+            const el = $('#countert');
+            let name = 'transactions';
+            if (data) {
+                if (data > 1) {
+                    name = 'transactions';
+                }
+                el.text(data + ' ' + name);
+                $('#transTable').removeClass('d-none');
+            } else {
+                el.html('No ' + name);
+                $('#transTable').addClass('d-none');
+            }
+        }
+
+        $(document).ready(function () {
+            getTransactions();
+
+        });
+
+        function getTransactions() {
+            $.ajax({
+                type: 'GET',
+                url: turi,
+                success: function (tdata) {
+                    $('#transactions').empty();
+                    getCountt(tdata.length);
+                    $.each(tdata, function (key, transaction) {
+                        $('<tr><td> ' + transaction.title + ' </td>' +
+                            '<td> ' + transaction.amount + ' </td>' +
+                            '<td><a class="btn btn-danger" onclick="deleteTransaction(' + transaction.id + ')">Delete</a></td>' +
+                            '</tr>').appendTo($('#transactions'));
+                    });
+
+                    transactions = tdata;
+
+                }
+            });
+
+        }
+
+        function addTransaction() {
+            const transaction = {
+                'title': $('#add-title').val(),
+                'amount': $('#add-amount').val(),
+                'date': "2017-01-25T07:00:00"
+            };
+
+            $.ajax({
+                type: 'POST',
+                accepts: 'application/json',
+                url: turi,
+                contentType: 'application/json',
+                data: JSON.stringify(transaction),
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('Error');
+                },
+                success: function (result) {
+                    getTransactions();
+                    $('#add-name').val('');
+
+                    $('#add-amount').val('');
+                }
+            });
+        }
+
+        function deleteTransaction(id) {
+            $.ajax({
+                url: turi + '/' + id,
+                type: 'DELETE',
+                success: function (result) {
+                    getTransactions();
+                    test = id;
+                }
+            });
+        }
+
+
+
+        function closeInputt() {
+            $('#spoiler').css({ 'display': 'none' });
+        }
+
+    </script>

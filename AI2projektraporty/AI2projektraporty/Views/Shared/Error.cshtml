@@ -1,0 +1,48 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<style>
+    .display-0 {
+        font-size: calc(7px + 6vw);
+    }
+</style>
+
+<div class="bgimguser d-flex align-items-center justify-content-center">
+
+    <div class="container-fluid">
+        <div class="pt-4">
+            <div class="mt-4 mb-4 text-center">
+                <p class="display-0 shadow2">@ViewData["Title"]</p>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center" style="font-size: 1.2em">
+            <div class="col-md-4">
+                <div class="jumbotron">
+                    <div class="">
+
+                        <h1 class="text-danger">Error.</h1>
+                        <h2 class="text-danger">An error occurred while processing your request.</h2>
+
+                        @if (Model.ShowRequestId)
+                        {
+                            <p>
+                                <strong>Request ID:</strong> <code>@Model.RequestId</code>
+                            </p>
+                        }
+
+                        <h3>Development Mode</h3>
+                        <p>
+                            Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
+                        </p>
+                        <p>
+                            <strong>Development environment should not be enabled in deployed applications</strong>, as it can result in sensitive information from exceptions being displayed to end users. For local debugging, development environment can be enabled by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>, and restarting the application.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

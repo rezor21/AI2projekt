@@ -1,0 +1,46 @@
+﻿body {
+    padding-top: 50px;
+}
+
+.bg-light-grey {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.shadow {
+    text-shadow: black 0.2em 0.25em 0.4em;
+}
+
+.shadow2 {
+    color: black;
+    text-shadow: 0.02em 0.02em 0.3em;
+}
+
+.shadow-white {
+    color: white;
+    text-shadow: 0.02em 0.02em 0.22em;
+}
+
+display-middle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%)
+}
+
+.bgimgreport {
+    background-image: url("../images/checking-checklist-clipboard-955449.jpg");
+    background-repeat: no-repeat;
+    min-height: 500px;
+    max-width: 100%
+}
+
+.bgimguser {
+    background-image: url("../images/blank-business-composition-373076.jpg");
+    min-height: 500px;
+    max-width: 100%
+}
+
+dt, dl {
+    font-size: 1.2em
+}

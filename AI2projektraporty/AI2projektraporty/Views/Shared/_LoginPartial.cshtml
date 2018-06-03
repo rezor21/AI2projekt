@@ -1,0 +1,101 @@
+@using Microsoft.AspNetCore.Identity
+@using AI2projektraporty.Models
+@using System.Collections.Generic
+@using System.Linq
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http.Authentication
+
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+<div class="container">
+    <!-- Trigger the modal with a button -->
+    <!-- Modal Login -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-notify modal-info">
+            <form asp-controller="Account" asp-action="Login" method="post">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <p class="h1 modal-title heading">Login</p>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-5 text-center">
+                                <img class="img-fluid" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVauLBLjsAPSy0iyqPwPqHnNa1FCKnJg7f4RzXzklYlN2uCot60Q">
+                            </div>
+                            <div class="col-md-7">
+                                <div class="input-group mt-3 mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="email">Email</span>
+                                    </div>
+                                    <input type="text" class="form-control" name="Email" aria-label="Email" aria-describedby="email">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="passw">Password</span>
+                                    </div>
+                                    <input type="password" class="form-control" name="Password" aria-label="Password" aria-describedby="passw">
+                                </div>
+                                <input type="checkbox" class="form-check-input" id="RememberMe" name="RememberMe" value="true" />
+                                <label class="form-check-label" for="RememberMe">Remember Me</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <a class="btn btn-outline-grey waves-effect" data-dismiss="modal">Close</a>
+                        <input class="btn btn-primary waves-effect" type="submit" value="Accept">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Modal Registry -->
+    <div class="modal fade" id="myModal2" role="dialog">
+        <div class="modal-dialog modal-lg modal-notify modal-warning">
+
+            <form asp-controller="Account" asp-action="Register" method="post">
+                <div class="modal-content">
+                    <div class="modal-header btn-amber" style="background-color: #ffa000 !important;">
+                        <p class="h1 modal-title heading">Register</p>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row d-flex align-items-center">
+                            <div class="col-md-5 ">
+                                <img class="img-fluid" src="https://www.healthcareinsurancenews.com/wp-content/uploads/2014/09/Register-Button.jpg">
+                            </div>
+                            <div class="col-md-7">
+                                <div class="input-group mb-3 mt-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="email">Email</span>
+                                    </div>
+                                    <input type="text" class="form-control" name="Email" aria-label="Email" aria-describedby="email">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="passw">Password</span>
+                                    </div>
+                                    <input type="password" class="form-control" name="Password" aria-label="Password" aria-describedby="passw">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="passw">Confirm password</span>
+                                    </div>
+                                    <input type="password" class="form-control" name="ConfirmPassword" aria-label="Password" aria-describedby="passw">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <a class="btn btn-outline-grey waves-effect" data-dismiss="modal">Close</a>
+                        <input class="btn btn-amber waves-effect" type="submit" value="Accept">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,155 @@
+﻿
+@{
+    Layout = null;
+}
+
+@{
+    ViewData["Title"] = Model.Report.Name;
+}
+
+@model PdfViewModel;
+
+<style>
+    .display-0 {
+        font-size: calc(7px + 5vw);
+    }
+
+</style>
+
+
+<!-- Bootstrap core CSS -->
+<link href="~/lib/css/bootstrap.min.css" rel="stylesheet">
+<!-- Material Design Bootstrap -->
+<link href="~/lib/css/mdb.min.css" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/bootstrap/dist/js/popper.min.js"></script>
+
+
+<div style="margin-bottom: 25px;">
+<div class="" style="max-width: 1100px">
+
+    <br \><br \>
+    <div class="text-center display-0">
+        <p> @Model.Report.Name: @Model.Report.Type report <br \>  @Model.Date </p>
+    </div>
+
+    <br \>
+
+    <canvas id="bar-chart-horizontal" width="1100"></canvas>
+
+    <div style="height:100vh;">
+        <br \>
+
+        <div class="text-center mt-5 mb-5">
+            <h1 id="countert"></h1>
+        </div>
+        <br \>
+        <table class="table table-bordered table-hover table-striped table-responsive-md">
+            <tr>
+                <th style="font-size: 1.9em !important" scope="col">Title</th>
+                <th style="font-size: 1.9em !important" scope="col">Amount</th>
+            </tr>
+            <tbody scope="row" id="transactions"></tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+
+
+            let transactions = null;
+            var amounts = [];
+            var titles = [];
+            var backgroundColors = [];
+            function getCountt(data) {
+                const el = $('#countert');
+                let name = 'transactions';
+                if (data) {
+                    if (data > 1) {
+                        name = 'transactions';
+                    }
+
+                    el.text('The total value of ' + data + ' ' + name + '  amounts @Model.Sum$');
+                } else {
+                    el.html('No ' + name);
+                }
+            }
+
+            $(document).ready(function () {
+                getTransactions();
+
+            });
+
+    var randomColorGenerator = function () {
+        return '#' + (Math.random().toString(16) + '0000000').slice(2, 8);
+    };
+
+    function done() {
+        setTimeout(function () { window.print(); }, 1000);
+
+    }
+
+            function getTransactions() {
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/reports/pdf/'+'@Model.Report.Id',
+                    success: function (tdata) {
+                        $('#transactions').empty();
+                        getCountt(tdata.length);
+                        $.each(tdata, function (key, transaction) {
+                            $('<tr><td style="font-size: 1.9em !important"> ' + transaction.title + ' </td>' +
+                                '<td style="font-size: 1.9em !important"> ' + transaction.amount + ' </td>' +
+                                '</tr>').appendTo($('#transactions'));
+
+                        });
+
+                        transactions = tdata;
+                        for (var i = 0; i < transactions.length; i++) {
+                            titles.push(transactions[i].title);
+                            amounts.push(transactions[i].amount);
+                            backgroundColors.push(randomColorGenerator());
+                        }
+
+
+                        new Chart(document.getElementById("bar-chart-horizontal"), {
+                            type: 'horizontalBar',
+                            data: {
+                                labels: titles,
+                                datasets: [
+                                    {
+                                        label: "Transactions ($)",
+                                        backgroundColor: backgroundColors,
+                                        data: amounts
+                                    }
+                                ]
+                            },
+                            options: {
+                                responsive: false,
+                                legend: { display: false },
+                                title: {
+                                    display: true,
+                                    text: 'Transactions chart'
+                                }
+                            },
+                            animation: {
+                                onComplete: done()
+                            }
+                        });
+
+
+                    }
+                });
+
+            }
+
+
+
+   
+
+</script>
+
+    </div>

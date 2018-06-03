@@ -1,0 +1,176 @@
+﻿
+
+@{
+    ViewData["Title"] = "Reports";
+}
+
+<style>
+    table th, td {
+        font-size: 1.12em !important;
+    }
+    .display-0 {
+        font-size: calc(7px + 6vw);
+    }
+</style>
+
+<div class="bgimgreport d-flex align-items-center justify-content-center">
+
+    <div class="container-fluid">
+        <div class="pt-4">
+            <div class="mt-5 mb-4 text-center">
+                <p class="display-0 text-white shadow-white">Reports</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="jumbotron text-center">
+                <h1 class="pb-4">Add a new report</h1>
+                <form action="javascript:void(0);" method="POST" onsubmit="addItem()">
+                    <div class="row mb-4">
+                        <div class="col-md-5 input-group">
+                            <div class="justify-content-center justify-content-md-end">
+                                <span style="height: 3.8em;" class="input-group-text" id="Name">Name</span>
+                            </div>
+                            <input type="text" class="form-control" name="Name" id="add-name" required>
+                        </div>
+                        <div class="col-md-5 justify-content-center input-group">
+                            <label class="input-group-text" for="add-type">Type</label>
+                            <select style="height: 3.8em;" class="custom-select" id="add-type" required>
+                                <option selected></option>
+                                <option value="0">Daily</option>
+                                <option value="1">Monthly</option>
+                                <option value="2">Yearly</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 justify-content-start">
+                            <input class="btn btn-success mr-1" type="submit" value="Add"></input>
+                        </div>
+                    </div>
+                </form>
+            
+                <hr/>
+
+                <h1 id="counter" class="p-4"></h1>
+
+                <table id="reportsTable" class="table table-bordered table-hover table-striped table-responsive-md">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Delete</th>
+                        <th scope="col">Generate</th>
+
+                    </tr>
+                    <tbody scope="row" id="reports"></tbody>
+                </table>
+
+            </div></div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    const uri = 'api/reports';
+    let reports = null;
+
+    function getCount(data) {
+        const el = $('#counter');
+        let name = 'reports';
+        if (data) {
+            if (data >= 1) {
+                name = 'My reports (';
+            }
+            el.text(name + data + ')');
+            $('#reportsTable').removeClass('d-none');
+        } else {
+            el.html('No ' + name);
+            $('#reportsTable').addClass('d-none');
+        }
+    }
+
+    $(document).ready(function () {
+        getData();
+
+    });
+
+    function parserType(item) {
+        switch (item.type) {
+            case 0:
+                item.type = "Daily";
+                break;
+            case 1:
+                item.type = "Monthly";
+                break;
+            case 2:
+                item.type = "Yearly";
+                break;
+
+        }
+
+    }
+
+    function getData() {
+        $.ajax({
+            type: 'GET',
+            url: uri,
+            success: function (data) {
+                $('#reports').empty();
+                getCount(data.length);
+                data.forEach(parserType);
+                $.each(data, function (key, item) {
+                    $('<tr><td> ' + item.name + ' </td>' +
+                        '<td> ' + item.type + ' </td>' +
+                        '<td><a class="btn btn-primary" href="reports/pdf/' + item.id + '" role="button">Generate</a></td>' +
+                        '<td><a class="btn btn-danger" onclick="deleteItem(' + item.id + ')">Delete</a></td>' +
+                        '</tr>').appendTo($('#reports'));
+                });
+
+                reports = data;
+
+            }
+        });
+
+    }
+
+    function addItem() {
+        const item = {
+            'name': $('#add-name').val(),
+            'type': $('#add-type').val(),
+            'userId': "1"
+        };
+
+        $.ajax({
+            type: 'POST',
+            accepts: 'application/json',
+            url: uri,
+            contentType: 'application/json',
+            data: JSON.stringify(item),
+            error: function (jqXHR, textStatus, errorThrown) {
+                getData();
+            },
+            success: function (result) {
+                getData();
+                $('#add-name').val('');
+
+                $('#add-type').val('');
+            }
+        });
+    }
+
+    function deleteItem(id) {
+        $.ajax({
+            url: uri + '/' + id,
+            type: 'DELETE',
+            success: function (result) {
+                getData();
+                test = id;
+            }
+        });
+    }
+
+
+
+    function closeInput() {
+        $('#spoiler').css({ 'display': 'none' });
+    }
+
+</script>
+

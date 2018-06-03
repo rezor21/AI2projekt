@@ -1,0 +1,23 @@
+﻿@{ 
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<div class="bgimguser d-flex align-items-center justify-content-center">
+    <div class="container mt-5">
+        <div class="jumbotron">
+            <div class="">
+                <div class="mb-1 text-center">
+                    <h1 class="mb-5">Manage your account</h1>
+                    @await Html.PartialAsync("_ManageNav")
+                    <p class="display-0 text-white shadow-white">Change your account settings</p>
+                </div>
+            </div>
+            @RenderBody()
+        </div>
+        </div>
+</div>
+
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

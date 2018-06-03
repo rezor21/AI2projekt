@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Access denied";
+}
+
+<style>
+    .display-0 {
+        font-size: calc(7px + 6vw);
+    }
+</style>
+
+<div class="bgimguser d-flex align-items-center justify-content-center">
+
+    <div class="container-fluid">
+        <div class="pt-4">
+            <div class="mt-4 mb-4 text-center">
+                <p class="display-0 shadow2">@ViewData["Title"]</p>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center" style="font-size: 1.4em">
+            <div class="col-md-4">
+                <div class="jumbotron">
+                    <div class="">
+                         <p class="text-danger">You do not have access to this resource.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
