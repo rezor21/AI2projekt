@@ -60,8 +60,8 @@ Cała struktura powstawania projektu oparta jest o przygotowany na samym począt
 | Zad 14 | Testowanie końcowe | 16 maj | 1 czerwiec |
 | Zad 15 | Stworzenie aplikacji mobilnej | 1 czerwiec | 4 czerwiec |
 
-**  
-2. Plan aplikacji.**
+ 
+**2. Plan aplikacji.**
 
 W początkowym planie aplikacji przyjęliśmy następujące założenia
 
