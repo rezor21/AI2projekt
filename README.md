@@ -1,6 +1,6 @@
 
 
-![enter image description here](https://image.ibb.co/nqjDAy/Bez_tytu_u.png)
+![logo UR](https://image.ibb.co/nqjDAy/Bez_tytu_u.png)
 
 
 Zespół projektowy:
@@ -86,6 +86,7 @@ Aplikacja powinna:
 **Bootstrap** - framework CSS, rozwijany przez programistów Twittera, wydawany na licencji MIT. Zawiera zestaw przydatnych narzędzi ułatwiających tworzenie interfejsu graficznego stron oraz aplikacji internetowych. Bazuje głównie na gotowych rozwiązaniach HTML oraz CSS (kompilowanych z plików Less) i może być stosowany m.in. do stylizacji takich elementów jak teksty, formularze, przyciski, wykresy, nawigacje i innych komponentów wyświetlanych na stronie. Używany przez nas w wersji 4.1.
 
 **Material Design for Bootstrap 4 (MDB)** - framework CSS i JS przystosowywujący Bootstrap’a do standardu Material Design.
+https://mdbootstrap.com
 
 **NuGet** – jest rozszerzeniem do Visual Studio ułatwiającym zarządzanie referencjami do bibliotek (tzw. system zarządzania pakietami). Pozwolił nam w  prosty sposób dodawać potrzebne frameworki i biblioteki do projektu.
 
@@ -96,3 +97,7 @@ Aplikacja powinna:
 **Xamarin** to framework firmy Microsoft stworzony do tworzenia aplikacji mobilnych (Android, iOS, Windows Phone) w oparciu o ten sam kod, który kompilowany jest dla każdej platformy mobilnej oddzielnie. Wykorzystany do aplikacji mobilnej.
 
 **Microsoft Azure** po prostu chmura publiczna od firmy Microsoft wykorzystaliśmy usługę bazy danych i AppServices do wdrożenia naszej aplikacji webowej.
+
+**Linki**
+- aplikacja webowa w chmurze: https://ai2projekt.azurewebsites.net
+
