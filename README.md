@@ -100,4 +100,5 @@ https://mdbootstrap.com
 
 **Linki**
 - aplikacja webowa w chmurze: https://ai2projekt.azurewebsites.net
+- aplikacja mobilna w sklepie play: https://play.google.com/store/apps/details?id=com.rezor.AI2raportyMobile
 
